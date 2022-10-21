@@ -70,8 +70,8 @@ const HARDCODED_LIST = [
 
 const TodoItem = ({todoObj, onChange, onDelete}) => {
   const [editing, setEditing] = useState(todoObj.editable); // true when editing
-  const [input, setInput] = useState(todoObj.text); //
   const {text, completed} = todoObj;
+  const [input, setInput] = useState(text); //
 
   // console.log("text:", text)
   // console.log("completed:", completed)
@@ -97,6 +97,7 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
           <button
             onClick={() => {
               onChange({text: text, completed: !completed});
+              setInput(text);
             }}>
             completed?
           </button>
@@ -106,6 +107,7 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
       <button
         onClick={() => {
           setEditing(false);
+          setInput(todoObj.text);
           onDelete();
         }}>
         Delete
