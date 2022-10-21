@@ -81,8 +81,7 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
         onClick={() => {
           setEditing(!editing);
           onChange({text: input, completed: completed});
-        }}
-      >
+        }}>
         {editing ? 'Finish Edit' : 'Begin Edit'}
       </button>
       {editing ? (
@@ -98,14 +97,19 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
           <button
             onClick={() => {
               onChange({text: text, completed: !completed});
-            }}
-          >
+            }}>
             completed?
           </button>
           {completed ? <s>{text}</s> : text}
-          <button onClick={onDelete}>Delete</button>
         </>
       )}
+      <button
+        onClick={() => {
+          setEditing(false);
+          onDelete();
+        }}>
+        Delete
+      </button>
     </li>
   );
 };
@@ -123,6 +127,7 @@ AddTask.propTypes = {
 };
 
 function App() {
+  // state todo which is a list of objects [{text: string, completed: bool}]
   const [todo, setTodo] = useState(HARDCODED_LIST);
 
   // produces delete function for a given xIndex
@@ -131,7 +136,7 @@ function App() {
     console.log('xIndex', xIndex);
     console.log('newTodo', newTodo);
     setTodo(newTodo);
-    console.log('todo: ', todo);
+    console.log('todo?!: ', todo);
   };
 
   // produces mutation function for a given xIndex, replace with todoitem
@@ -148,7 +153,7 @@ function App() {
       <AddTask
         addfcn={() => {
           const placeHolderTask = {
-            text: 'placeholder',
+            text: 'New Task',
             completed: false,
             editable: true,
           };
