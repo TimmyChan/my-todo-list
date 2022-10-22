@@ -48,7 +48,7 @@ why not class components?
   center layout + make less wide
   pizzazz
 ==Code==
-  refactor top level todo list component
+  refactor top level todo list component (+)
   store list in browser memory, only use hard coded when it's not present.
   (find a lib)
 */
@@ -109,13 +109,25 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
         />
       ) : (
         <>
-          <button
-            onClick={() => {
-              onChange({text: text, completed: !completed});
-            }}>
-            completed?
-          </button>
-          {completed ? <s>{text}</s> : text}
+          {completed ? (
+            <s>
+              {
+                <span
+                  onClick={() => {
+                    onChange({text: text, completed: !completed});
+                  }}>
+                  {text}
+                </span>
+              }
+            </s>
+          ) : (
+            <span
+              onClick={() => {
+                onChange({text: text, completed: !completed});
+              }}>
+              {text}
+            </span>
+          )}
         </>
       )}
       <button
@@ -141,10 +153,10 @@ AddTask.propTypes = {
   addfcn: PropTypes.func.isRequired,
 };
 
-function App() {
+const TodoList = ({inputList}) => {
   // state todo which is a list of objects [{text: string, completed: bool}]
   // paramatize this list
-  const [todo, setTodo] = useState(HARDCODED_LIST);
+  const [todo, setTodo] = useState(inputList);
 
   // produces delete function for a given xIndex
   const getDeletionFunction = (xIndex) => () => {
@@ -164,34 +176,43 @@ function App() {
 
   console.log('Rerendering here...');
   return (
-    <div className="App">
-      {
-        // make title a parameter
-      }
-      <h1> Hello, A to do list will go here. </h1>
-      <AddTask
-        addfcn={() => {
-          const placeHolderTask = {
-            text: 'New Task',
-            completed: false,
-            editable: true,
-          };
-          const newTaskList = todo.concat([placeHolderTask]);
-          setTodo(newTaskList);
-        }}
-      />
-      <ul>
-        {todo.map((todoItem, xIndex) => (
-          <TodoItem
-            todoObj={todoItem}
-            onChange={getTodoMutator(xIndex)}
-            onDelete={getDeletionFunction(xIndex)}
-            key={xIndex}
-          />
-        ))}
-      </ul>
+    <div className="TodoList">
+      <center>
+        {
+          // make title a parameter
+        }
+        <h1> Hello, A to do list will go here. </h1>
+        <AddTask
+          addfcn={() => {
+            const placeHolderTask = {
+              text: 'New Task',
+              completed: false,
+              editable: true,
+            };
+            const newTaskList = todo.concat([placeHolderTask]);
+            setTodo(newTaskList);
+          }}
+        />
+        <ul>
+          {todo.map((todoItem, xIndex) => (
+            <TodoItem
+              todoObj={todoItem}
+              onChange={getTodoMutator(xIndex)}
+              onDelete={getDeletionFunction(xIndex)}
+              key={xIndex}
+            />
+          ))}
+        </ul>
+      </center>
     </div>
   );
+};
+TodoList.propTypes = {
+  inputList: PropTypes.object.isRequired,
+};
+
+function App() {
+  return <TodoList inputList={HARDCODED_LIST} />;
 }
 
 export default App;
