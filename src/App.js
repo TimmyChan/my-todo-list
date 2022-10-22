@@ -182,17 +182,7 @@ const TodoList = ({inputList}) => {
           // make title a parameter
         }
         <h1> Hello, A to do list will go here. </h1>
-        <AddTask
-          addfcn={() => {
-            const placeHolderTask = {
-              text: 'New Task',
-              completed: false,
-              editable: true,
-            };
-            const newTaskList = todo.concat([placeHolderTask]);
-            setTodo(newTaskList);
-          }}
-        />
+
         <ul>
           {todo.map((todoItem, xIndex) => (
             <TodoItem
@@ -202,6 +192,19 @@ const TodoList = ({inputList}) => {
               key={xIndex}
             />
           ))}
+          <li>
+            <AddTask
+              addfcn={() => {
+                const placeHolderTask = {
+                  text: 'New Task',
+                  completed: false,
+                  editable: true,
+                };
+                const newTaskList = todo.concat([placeHolderTask]);
+                setTodo(newTaskList);
+              }}
+            />
+          </li>
         </ul>
       </center>
     </div>
