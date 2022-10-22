@@ -39,6 +39,20 @@ why not class components?
 - they introduce state which is not referentially transparent
 */
 
+/* req 10/21:
+==Aesthetics==
+  buttons line up veritcally
+  icons for buttons
+  text: click to strike thru instead of button
+  input box can be prettier
+  center layout + make less wide
+  pizzazz
+==Code==
+  refactor top level todo list component
+  store list in browser memory, only use hard coded when it's not present.
+  (find a lib)
+*/
+
 const HARDCODED_LIST = [
   {
     text: 'stay quitted',
@@ -70,8 +84,8 @@ const HARDCODED_LIST = [
 
 const TodoItem = ({todoObj, onChange, onDelete}) => {
   const [editing, setEditing] = useState(todoObj.editable); // true when editing
+  const [input, setInput] = useState(todoObj.text); //
   const {text, completed} = todoObj;
-  const [input, setInput] = useState(text); //
 
   // console.log("text:", text)
   // console.log("completed:", completed)
@@ -80,6 +94,7 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
       <button
         onClick={() => {
           setEditing(!editing);
+          setInput(todoObj.text);
           onChange({text: input, completed: completed});
         }}>
         {editing ? 'Finish Edit' : 'Begin Edit'}
@@ -97,7 +112,6 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
           <button
             onClick={() => {
               onChange({text: text, completed: !completed});
-              setInput(text);
             }}>
             completed?
           </button>
@@ -107,7 +121,6 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
       <button
         onClick={() => {
           setEditing(false);
-          setInput(todoObj.text);
           onDelete();
         }}>
         Delete
@@ -130,11 +143,12 @@ AddTask.propTypes = {
 
 function App() {
   // state todo which is a list of objects [{text: string, completed: bool}]
+  // paramatize this list
   const [todo, setTodo] = useState(HARDCODED_LIST);
 
   // produces delete function for a given xIndex
   const getDeletionFunction = (xIndex) => () => {
-    const newTodo = Array.from(todo.filter((y, yIndex) => yIndex !== xIndex));
+    const newTodo = todo.filter((y, yIndex) => yIndex !== xIndex);
     console.log('xIndex', xIndex);
     console.log('newTodo', newTodo);
     setTodo(newTodo);
@@ -148,10 +162,13 @@ function App() {
     setTodo(newTodo);
   };
 
+  console.log('Rerendering here...');
   return (
     <div className="App">
+      {
+        // make title a parameter
+      }
       <h1> Hello, A to do list will go here. </h1>
-
       <AddTask
         addfcn={() => {
           const placeHolderTask = {
