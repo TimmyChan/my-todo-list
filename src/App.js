@@ -43,7 +43,7 @@ why not class components?
 ==Aesthetics==
   buttons line up veritcally
   icons for buttons
-  text: click to strike thru instead of button
+  text: click to strike thru instead of button (+)
   input box can be prettier
   center layout + make less wide
   pizzazz
@@ -208,7 +208,7 @@ const TodoList = ({inputList}) => {
   );
 };
 TodoList.propTypes = {
-  inputList: PropTypes.object.isRequired,
+  inputList: PropTypes.array.isRequired,
 };
 
 function App() {
