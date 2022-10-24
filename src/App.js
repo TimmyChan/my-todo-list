@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
+import Button from 'react-bootstrap/Button';
+import {BsFillTrashFill, BsFillPencilFill} from 'react-icons/bs';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 /*
@@ -93,14 +94,18 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
   return (
     <Row>
       <Col md={3}>
-        <button
+        <Button
+          variant="dark"
           onClick={() => {
             setEditing(!editing);
             setInput(todoObj.text);
             onChange({text: input, completed: completed});
           }}>
-          {editing ? 'Finish Edit' : 'Begin Edit'}
-        </button>
+          {
+            // {editing ? 'Finish Edit' : 'Begin Edit'}
+          }
+          <BsFillPencilFill />
+        </Button>
       </Col>
       <Col md={6}>
         {editing ? (
@@ -136,13 +141,14 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
         )}
       </Col>
       <Col md={3}>
-        <button
+        <Button
+          variant="danger"
           onClick={() => {
             setEditing(false);
             onDelete();
           }}>
-          Delete
-        </button>
+          <BsFillTrashFill />
+        </Button>
       </Col>
     </Row>
   );
@@ -154,7 +160,7 @@ TodoItem.propTypes = {
 };
 
 const AddTask = ({addfcn}) => {
-  return <button onClick={addfcn}>Add task</button>;
+  return <Button onClick={addfcn}>Add task</Button>;
 };
 AddTask.propTypes = {
   addfcn: PropTypes.func.isRequired,
@@ -217,7 +223,20 @@ TodoList.propTypes = {
 };
 
 function App() {
-  return <TodoList inputList={HARDCODED_LIST} listTitle={'Hardcoded List'} />;
+  return (
+    <>
+      <Container fluid>
+        <Row>
+          <Col>
+            <TodoList inputList={HARDCODED_LIST} listTitle={'Hardcoded List'} />
+          </Col>
+          <Col>
+            <TodoList inputList={HARDCODED_LIST} listTitle={'Hardcoded List'} />
+          </Col>
+        </Row>
+      </Container>
+    </>
+  );
 }
 
 export default App;
