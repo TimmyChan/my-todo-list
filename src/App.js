@@ -1,7 +1,9 @@
 import './App.css';
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 /*
 should have the ability to:
 - add tasks to the to-do list
@@ -80,64 +82,66 @@ const HARDCODED_LIST = [
   },
 ];
 
-// 1234
-
 const TodoItem = ({todoObj, onChange, onDelete}) => {
-  const [editing, setEditing] = useState(todoObj.editable); // true when editing
-  const [input, setInput] = useState(todoObj.text); //
+  const [editing, setEditing] = useState(todoObj.editable);
+  const [input, setInput] = useState(todoObj.text);
   const {text, completed} = todoObj;
 
-  // console.log("text:", text)
-  // console.log("completed:", completed)
   return (
-    <li>
-      <button
-        onClick={() => {
-          setEditing(!editing);
-          setInput(todoObj.text);
-          onChange({text: input, completed: completed});
-        }}>
-        {editing ? 'Finish Edit' : 'Begin Edit'}
-      </button>
-      {editing ? (
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => {
-            setInput(e.target.value);
-          }} // ?? not sure how to have come up with this line
-        />
-      ) : (
-        <>
-          {completed ? (
-            <s>
-              {
-                <span
-                  onClick={() => {
-                    onChange({text: text, completed: !completed});
-                  }}>
-                  {text}
-                </span>
-              }
-            </s>
-          ) : (
-            <span
-              onClick={() => {
-                onChange({text: text, completed: !completed});
-              }}>
-              {text}
-            </span>
-          )}
-        </>
-      )}
-      <button
-        onClick={() => {
-          setEditing(false);
-          onDelete();
-        }}>
-        Delete
-      </button>
-    </li>
+    <Row>
+      <Col lg={true}>
+        <button
+          onClick={() => {
+            setEditing(!editing);
+            setInput(todoObj.text);
+            onChange({text: input, completed: completed});
+          }}>
+          {editing ? 'Finish Edit' : 'Begin Edit'}
+        </button>
+      </Col>
+      <Col lg={true}>
+        {editing ? (
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => {
+              setInput(e.target.value);
+            }}
+          />
+        ) : (
+          <>
+            {completed ? (
+              <s>
+                {
+                  <span
+                    onClick={() => {
+                      onChange({text: text, completed: !completed});
+                    }}>
+                    {text}
+                  </span>
+                }
+              </s>
+            ) : (
+              <span
+                onClick={() => {
+                  onChange({text: text, completed: !completed});
+                }}>
+                {text}
+              </span>
+            )}
+          </>
+        )}
+      </Col>
+      <Col lg={true}>
+        <button
+          onClick={() => {
+            setEditing(false);
+            onDelete();
+          }}>
+          Delete
+        </button>
+      </Col>
+    </Row>
   );
 };
 TodoItem.propTypes = {
@@ -153,7 +157,7 @@ AddTask.propTypes = {
   addfcn: PropTypes.func.isRequired,
 };
 
-const TodoList = ({inputList}) => {
+const TodoList = ({inputList, listTitle}) => {
   // state todo which is a list of objects [{text: string, completed: bool}]
   // paramatize this list
   const [todo, setTodo] = useState(inputList);
@@ -161,10 +165,7 @@ const TodoList = ({inputList}) => {
   // produces delete function for a given xIndex
   const getDeletionFunction = (xIndex) => () => {
     const newTodo = todo.filter((y, yIndex) => yIndex !== xIndex);
-    console.log('xIndex', xIndex);
-    console.log('newTodo', newTodo);
     setTodo(newTodo);
-    console.log('todo?!: ', todo);
   };
 
   // produces mutation function for a given xIndex, replace with todoitem
@@ -174,25 +175,20 @@ const TodoList = ({inputList}) => {
     setTodo(newTodo);
   };
 
-  console.log('Rerendering here...');
   return (
     <div className="TodoList">
-      <center>
-        {
-          // make title a parameter
-        }
-        <h1> Hello, A to do list will go here. </h1>
-
-        <ul>
-          {todo.map((todoItem, xIndex) => (
-            <TodoItem
-              todoObj={todoItem}
-              onChange={getTodoMutator(xIndex)}
-              onDelete={getDeletionFunction(xIndex)}
-              key={xIndex}
-            />
-          ))}
-          <li>
+      <h1> {listTitle} </h1>
+      <Container fluid>
+        {todo.map((todoItem, xIndex) => (
+          <TodoItem
+            todoObj={todoItem}
+            onChange={getTodoMutator(xIndex)}
+            onDelete={getDeletionFunction(xIndex)}
+            key={xIndex}
+          />
+        ))}
+        <Row>
+          <Col>
             <AddTask
               addfcn={() => {
                 const placeHolderTask = {
@@ -204,18 +200,19 @@ const TodoList = ({inputList}) => {
                 setTodo(newTaskList);
               }}
             />
-          </li>
-        </ul>
-      </center>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 };
 TodoList.propTypes = {
   inputList: PropTypes.array.isRequired,
+  listTitle: PropTypes.string.isRequired,
 };
 
 function App() {
-  return <TodoList inputList={HARDCODED_LIST} />;
+  return <TodoList inputList={HARDCODED_LIST} listTitle={'Hardcoded List'} />;
 }
 
 export default App;
