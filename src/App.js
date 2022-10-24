@@ -93,20 +93,6 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
 
   return (
     <Row>
-      <Col md={3}>
-        <Button
-          variant="dark"
-          onClick={() => {
-            setEditing(!editing);
-            setInput(todoObj.text);
-            onChange({text: input, completed: completed});
-          }}>
-          {
-            // {editing ? 'Finish Edit' : 'Begin Edit'}
-          }
-          <BsFillPencilFill />
-        </Button>
-      </Col>
       <Col md={6}>
         {editing ? (
           <input
@@ -139,6 +125,20 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
             )}
           </>
         )}
+      </Col>
+      <Col md={3}>
+        <Button
+          variant="dark"
+          onClick={() => {
+            setEditing(!editing);
+            setInput(todoObj.text);
+            onChange({text: input, completed: completed});
+          }}>
+          {
+            // {editing ? 'Finish Edit' : 'Begin Edit'}
+          }
+          <BsFillPencilFill />
+        </Button>
       </Col>
       <Col md={3}>
         <Button
