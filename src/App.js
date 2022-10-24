@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 /*
 should have the ability to:
 - add tasks to the to-do list
@@ -89,7 +92,7 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
 
   return (
     <Row>
-      <Col lg={true}>
+      <Col md={3}>
         <button
           onClick={() => {
             setEditing(!editing);
@@ -99,7 +102,7 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
           {editing ? 'Finish Edit' : 'Begin Edit'}
         </button>
       </Col>
-      <Col lg={true}>
+      <Col md={6}>
         {editing ? (
           <input
             type="text"
@@ -132,7 +135,7 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
           </>
         )}
       </Col>
-      <Col lg={true}>
+      <Col md={3}>
         <button
           onClick={() => {
             setEditing(false);
@@ -176,7 +179,9 @@ const TodoList = ({inputList, listTitle}) => {
   };
 
   return (
-    <div className="TodoList">
+    <div
+      className="TodoList"
+      style={{width: 800, backgroundColor: 'rgba(255, 0, 0, 0.1)'}}>
       <h1> {listTitle} </h1>
       <Container fluid>
         {todo.map((todoItem, xIndex) => (
