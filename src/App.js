@@ -1,11 +1,9 @@
 import './App.css';
-import React, {useState} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import {BsFillTrashFill, BsFillPencilFill} from 'react-icons/bs';
+import TodoList from './TodoList.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 /*
@@ -47,16 +45,36 @@ why not class components?
 
 /* req 10/21:
 ==Aesthetics==
-  buttons line up veritcally
-  icons for buttons
+  buttons line up veritcally (+)
+  icons for buttons (+)
   text: click to strike thru instead of button (+)
   input box can be prettier
-  center layout + make less wide
+  center layout (centered title)
+  make less wide (+)
   pizzazz
 ==Code==
   refactor top level todo list component (+)
   store list in browser memory, only use hard coded when it's not present.
   (find a lib)
+
+req 10/24:
+  do not use pixels for sizing, use relative units instead
+==Aesthetics==
+  more vertical space between buttons
+  center list within its container
+  center containers
+  bring back bullet points
+  pen button change to save button (and change color)
+  break file into 3 separate files. (Todolist, TodoItem, App)
+  tooltips to buttons
+  Text > buttons:
+    different color for buttons
+    maybe smaller buttons
+    make text pop more
+==Code==
+  refactor, inline AddItem
+  store list in browser memory,
+  only use hard coded when it's not present.
 */
 
 const HARDCODED_LIST = [
@@ -85,142 +103,6 @@ const HARDCODED_LIST = [
     completed: false,
   },
 ];
-
-const TodoItem = ({todoObj, onChange, onDelete}) => {
-  const [editing, setEditing] = useState(todoObj.editable);
-  const [input, setInput] = useState(todoObj.text);
-  const {text, completed} = todoObj;
-
-  return (
-    <Row>
-      <Col md={6}>
-        {editing ? (
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => {
-              setInput(e.target.value);
-            }}
-          />
-        ) : (
-          <>
-            {completed ? (
-              <s>
-                {
-                  <span
-                    onClick={() => {
-                      onChange({text: text, completed: !completed});
-                    }}>
-                    {text}
-                  </span>
-                }
-              </s>
-            ) : (
-              <span
-                onClick={() => {
-                  onChange({text: text, completed: !completed});
-                }}>
-                {text}
-              </span>
-            )}
-          </>
-        )}
-      </Col>
-      <Col md={3}>
-        <Button
-          variant="dark"
-          onClick={() => {
-            setEditing(!editing);
-            setInput(todoObj.text);
-            onChange({text: input, completed: completed});
-          }}>
-          {
-            // {editing ? 'Finish Edit' : 'Begin Edit'}
-          }
-          <BsFillPencilFill />
-        </Button>
-      </Col>
-      <Col md={3}>
-        <Button
-          variant="danger"
-          onClick={() => {
-            setEditing(false);
-            onDelete();
-          }}>
-          <BsFillTrashFill />
-        </Button>
-      </Col>
-    </Row>
-  );
-};
-TodoItem.propTypes = {
-  todoObj: PropTypes.object.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-};
-
-const AddTask = ({addfcn}) => {
-  return <Button onClick={addfcn}>Add task</Button>;
-};
-AddTask.propTypes = {
-  addfcn: PropTypes.func.isRequired,
-};
-
-const TodoList = ({inputList, listTitle}) => {
-  // state todo which is a list of objects [{text: string, completed: bool}]
-  // paramatize this list
-  const [todo, setTodo] = useState(inputList);
-
-  // produces delete function for a given xIndex
-  const getDeletionFunction = (xIndex) => () => {
-    const newTodo = todo.filter((y, yIndex) => yIndex !== xIndex);
-    setTodo(newTodo);
-  };
-
-  // produces mutation function for a given xIndex, replace with todoitem
-  const getTodoMutator = (xIndex) => (todoItem) => {
-    const newTodo = Array.from(todo);
-    newTodo[xIndex] = todoItem;
-    setTodo(newTodo);
-  };
-
-  return (
-    <div
-      className="TodoList"
-      style={{width: 800, backgroundColor: 'rgba(255, 0, 0, 0.1)'}}>
-      <h1> {listTitle} </h1>
-      <Container fluid>
-        {todo.map((todoItem, xIndex) => (
-          <TodoItem
-            todoObj={todoItem}
-            onChange={getTodoMutator(xIndex)}
-            onDelete={getDeletionFunction(xIndex)}
-            key={xIndex}
-          />
-        ))}
-        <Row>
-          <Col>
-            <AddTask
-              addfcn={() => {
-                const placeHolderTask = {
-                  text: 'New Task',
-                  completed: false,
-                  editable: true,
-                };
-                const newTaskList = todo.concat([placeHolderTask]);
-                setTodo(newTaskList);
-              }}
-            />
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  );
-};
-TodoList.propTypes = {
-  inputList: PropTypes.array.isRequired,
-  listTitle: PropTypes.string.isRequired,
-};
 
 function App() {
   return (
