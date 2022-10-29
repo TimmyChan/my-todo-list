@@ -12,61 +12,67 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
   const {text, completed} = todoObj;
 
   return (
-    <Row>
-      <Col md={6}>
-        {editing ? (
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => {
-              setInput(e.target.value);
-            }}
-          />
-        ) : (
-          <>
-            {completed ? (
-              <s>
-                {
-                  <span
-                    onClick={() => {
-                      onChange({text: text, completed: !completed});
-                    }}>
-                    {text}
-                  </span>
-                }
-              </s>
+    <li>
+      <Row style={{textAlign: 'center'}}>
+        <Col>
+          {editing ? (
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => {
+                setInput(e.target.value);
+              }}
+            />
+          ) : (
+            <>
+              {completed ? (
+                <s>
+                  {
+                    <h2
+                      onClick={() => {
+                        onChange({text: text, completed: !completed});
+                      }}>
+                      {text}
+                    </h2>
+                  }
+                </s>
+              ) : (
+                <h2
+                  onClick={() => {
+                    onChange({text: text, completed: !completed});
+                  }}>
+                  {text}
+                </h2>
+              )}
+            </>
+          )}
+        </Col>
+        <Col style={{textAlign: 'center'}}>
+          <Button
+            variant="dark"
+            onClick={() => {
+              setEditing(!editing);
+              setInput(todoObj.text);
+              onChange({text: input, completed: completed});
+            }}>
+            {editing ? (
+              <BsSave2Fill style={{color: 'green'}} />
             ) : (
-              <span
-                onClick={() => {
-                  onChange({text: text, completed: !completed});
-                }}>
-                {text}
-              </span>
+              <BsFillPencilFill />
             )}
-          </>
-        )}
-      </Col>
-      <Col md={3}>
-        <Button
-          variant="dark"
-          onClick={() => {
-            setEditing(!editing);
-            setInput(todoObj.text);
-            onChange({text: input, completed: completed});
-          }}>
-          {/* different color based on editing tag */}
-          {editing ? <BsSave2Fill /> : <BsFillPencilFill />}
-        </Button>
-        <Button
-          variant="danger"
-          onClick={() => {
-            setEditing(false);
-            onDelete();
-          }}>
-          <BsFillTrashFill />
-        </Button>
-      </Col>
-    </Row>
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => {
+              setEditing(false);
+              onDelete();
+            }}>
+            <BsFillTrashFill />
+          </Button>
+        </Col>
+        <p></p>
+      </Row>
+    </li>
   );
 };
 TodoItem.propTypes = {

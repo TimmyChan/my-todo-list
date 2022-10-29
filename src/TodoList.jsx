@@ -29,22 +29,22 @@ const TodoList = ({inputList, listTitle}) => {
     <div
       className="TodoList"
       style={{
-        backgroundColor: 'rgba(255, 0, 0, 0.1)',
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: 'rgba(208, 244, 234)',
       }}>
       <h1 style={{textAlign: 'center'}}> {listTitle} </h1>
-      <Container fluid>
-        {todo.map((todoItem, xIndex) => (
-          <TodoItem
-            todoObj={todoItem}
-            onChange={getTodoMutator(xIndex)}
-            onDelete={getDeletionFunction(xIndex)}
-            key={xIndex}
-          />
-        ))}
+      <Container>
+        <ul>
+          {todo.map((todoItem, xIndex) => (
+            <TodoItem
+              todoObj={todoItem}
+              onChange={getTodoMutator(xIndex)}
+              onDelete={getDeletionFunction(xIndex)}
+              key={xIndex}
+            />
+          ))}
+        </ul>
         <Row>
-          <Col>
+          <Col style={{textAlign: 'center'}}>
             <Button
               onClick={() => {
                 const placeHolderTask = {

@@ -49,7 +49,7 @@ why not class components?
   icons for buttons (+)
   text: click to strike thru instead of button (+)
   input box can be prettier
-  center layout (centered title)
+  center layout (+)
   make less wide (+)
   pizzazz
 ==Code==
@@ -58,17 +58,17 @@ why not class components?
   (find a lib)
 
 req 10/24:
-  do not use pixels for sizing, use relative units instead
+  do not use pixels for sizing, use relative units instead (+)
 ==Aesthetics==
-  more vertical space between buttons
-  center list within its container
-  center containers
-  bring back bullet points
+  more vertical space between buttons (+)
+  center list within its container (+)
+  center containers (+)
+  bring back bullet points (+)
   pen button change to save button (and change color)
-  break file into 3 separate files. (Todolist, TodoItem, App)
-  tooltips to buttons
+  break file into 3 separate files. (Todolist, TodoItem, App) (+)
+  tooltips to buttons (+)
   Text > buttons:
-    different color for buttons
+    different color for buttons (+)
     maybe smaller buttons
     make text pop more
 ==Code==
