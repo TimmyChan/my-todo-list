@@ -17,6 +17,7 @@ const TodoList = ({inputList, listTitle}) => {
     const newTodo = todo.filter((y, yIndex) => yIndex !== xIndex);
     setTodo(newTodo);
     localStorage.setItem('todo', JSON.stringify(newTodo));
+    // not sure why this didn't work with todo
   };
 
   // produces mutation function for a given xIndex, replace with todoitem

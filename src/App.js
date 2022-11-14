@@ -69,12 +69,10 @@ req 10/24:
   tooltips to buttons (+)
   Text > buttons:
     different color for buttons (+)
-    maybe smaller buttons
-    make text pop more
+    make text pop more (+)
 ==Code==
-  refactor, inline AddItem
-  store list in browser memory,
-  only use hard coded when it's not present.
+  refactor, inline AddItem (+)
+  store list in browser memory, (+)
 */
 
 const HARDCODED_LIST = [
