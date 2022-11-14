@@ -105,19 +105,17 @@ const HARDCODED_LIST = [
 ];
 
 function App() {
+  const saved = JSON.parse(localStorage.getItem('todo'));
+  const initial = saved !== null ? saved : HARDCODED_LIST;
   return (
-    <>
-      <Container fluid>
-        <Row>
-          <Col>
-            <TodoList inputList={HARDCODED_LIST} listTitle={'Hardcoded List'} />
-          </Col>
-          <Col>
-            <TodoList inputList={HARDCODED_LIST} listTitle={'Hardcoded List'} />
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <Container>
+      <Row>
+        <Col>
+          <TodoList inputList={initial} listTitle={'Todo List'} />
+        </Col>
+        <Col></Col>
+      </Row>
+    </Container>
   );
 }
 

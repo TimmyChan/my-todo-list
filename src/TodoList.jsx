@@ -16,6 +16,7 @@ const TodoList = ({inputList, listTitle}) => {
   const getDeletionFunction = (xIndex) => () => {
     const newTodo = todo.filter((y, yIndex) => yIndex !== xIndex);
     setTodo(newTodo);
+    localStorage.setItem('todo', JSON.stringify(newTodo));
   };
 
   // produces mutation function for a given xIndex, replace with todoitem
@@ -23,6 +24,7 @@ const TodoList = ({inputList, listTitle}) => {
     const newTodo = Array.from(todo);
     newTodo[xIndex] = todoItem;
     setTodo(newTodo);
+    localStorage.setItem('todo', JSON.stringify(newTodo));
   };
 
   return (
@@ -54,6 +56,7 @@ const TodoList = ({inputList, listTitle}) => {
                 };
                 const newTaskList = todo.concat([placeHolderTask]);
                 setTodo(newTaskList);
+                localStorage.setItem('todo', JSON.stringify(todo));
               }}>
               Add task
             </Button>
