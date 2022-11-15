@@ -52,8 +52,8 @@ const TodoItem = ({todoObj, onChange, onDelete}) => {
             variant="dark"
             onClick={() => {
               setEditing(!editing);
-              setInput(todoObj.text);
               onChange({text: input, completed: completed});
+              setInput(todoObj.text);
             }}>
             {editing ? (
               <BsSave2Fill style={{color: 'green'}} />

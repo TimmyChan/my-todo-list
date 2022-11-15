@@ -13,19 +13,24 @@ const TodoList = ({inputList, listTitle}) => {
   const [todo, setTodo] = useState(inputList);
 
   // produces delete function for a given xIndex
-  const getDeletionFunction = (xIndex) => () => {
-    const newTodo = todo.filter((y, yIndex) => yIndex !== xIndex);
-    setTodo(newTodo);
-    localStorage.setItem('todo', JSON.stringify(newTodo));
-    // not sure why this didn't work with todo
+  const getDeletionFunction = (xIndex) => {
+    // console.log(`Deletion Function ${xIndex} generated`);
+    return () => {
+      const newTodo = todo.filter((y, yIndex) => yIndex !== xIndex);
+      setTodo(newTodo);
+      localStorage.setItem('todo', JSON.stringify(newTodo));
+    };
   };
 
   // produces mutation function for a given xIndex, replace with todoitem
-  const getTodoMutator = (xIndex) => (todoItem) => {
-    const newTodo = Array.from(todo);
-    newTodo[xIndex] = todoItem;
-    setTodo(newTodo);
-    localStorage.setItem('todo', JSON.stringify(newTodo));
+  const getTodoMutator = (xIndex) => {
+    // console.log(`Mutator Function ${xIndex} generated`);
+    return (todoItem) => {
+      const newTodo = Array.from(todo);
+      newTodo[xIndex] = todoItem;
+      setTodo(newTodo);
+      localStorage.setItem('todo', JSON.stringify(newTodo));
+    };
   };
 
   return (
@@ -57,7 +62,7 @@ const TodoList = ({inputList, listTitle}) => {
                 };
                 const newTaskList = todo.concat([placeHolderTask]);
                 setTodo(newTaskList);
-                localStorage.setItem('todo', JSON.stringify(todo));
+                localStorage.setItem('todo', JSON.stringify(newTaskList));
               }}>
               Add task
             </Button>
