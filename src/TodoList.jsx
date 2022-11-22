@@ -14,7 +14,6 @@ const TodoList = ({inputList, listTitle}) => {
 
   // produces delete function for a given xIndex
   const getDeletionFunction = (xIndex) => {
-    // console.log(`Deletion Function ${xIndex} generated`);
     return () => {
       const newTodo = todo.filter((y, yIndex) => yIndex !== xIndex);
       setTodo(newTodo);
@@ -24,7 +23,6 @@ const TodoList = ({inputList, listTitle}) => {
 
   // produces mutation function for a given xIndex, replace with todoitem
   const getTodoMutator = (xIndex) => {
-    // console.log(`Mutator Function ${xIndex} generated`);
     return (todoItem) => {
       const newTodo = Array.from(todo);
       newTodo[xIndex] = todoItem;

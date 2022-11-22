@@ -73,6 +73,12 @@ req 10/24:
 ==Code==
   refactor, inline AddItem (+)
   store list in browser memory, (+)
+
+11/14 Goals:
+==Code==
+  List of TodoLists
+    use contest to deal with this
+  Button to add a Todolist
 */
 
 const HARDCODED_LIST = [
@@ -102,15 +108,34 @@ const HARDCODED_LIST = [
   },
 ];
 
+const HARDCODED_LIST_LIST = [
+  {list: HARDCODED_LIST, title: 'Todo List'},
+  {list: HARDCODED_LIST, title: 'Todo List'},
+];
+
+const TodoListList = ({initialListOfLists}) => {
+  const [listOfLists, setListOfLists] = useState(initialListOfLists);
+  return (
+    listOfLists.map((listObj, listIndex)=>
+      (
+        <TodoList inputList={listObj.list}
+          listTitle={listObj.title} key={listIndex}/>
+      )));
+};
+
 function App() {
-  const saved = JSON.parse(localStorage.getItem('todo'));
-  const initial = saved !== null ? saved : HARDCODED_LIST;
+  // const saved = JSON.parse(localStorage.getItem('todo'));
+  // const initial = saved !== null ? saved : HARDCODED_LIST;
   return (
     <Container>
       <Row>
+        <TodoListList initialListOfLists={HARDCODED_LIST_LIST} />
+        {
+        /*
         <Col>
           <TodoList inputList={initial} listTitle={'Todo List'} />
         </Col>
+      */}
         <Col></Col>
       </Row>
     </Container>
