@@ -1,8 +1,5 @@
 import './App.css';
-import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import React, {useState} from 'react';
 import TodoList from './TodoList.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -114,31 +111,23 @@ const HARDCODED_LIST_LIST = [
 ];
 
 const TodoListList = ({initialListOfLists}) => {
-  const [listOfLists, setListOfLists] = useState(initialListOfLists);
+  const [listOfLists] = useState(initialListOfLists);
   return (
-    listOfLists.map((listObj, listIndex)=>
+    listOfLists.map((listObj, listIndex) =>
       (
-        <TodoList inputList={listObj.list}
-          listTitle={listObj.title} key={listIndex}/>
-      )));
+        <TodoList
+          inputList={listObj.list}
+          listTitle={listObj.title}
+          key={listIndex} />
+      ))
+  );
 };
 
 function App() {
   // const saved = JSON.parse(localStorage.getItem('todo'));
   // const initial = saved !== null ? saved : HARDCODED_LIST;
   return (
-    <Container>
-      <Row>
-        <TodoListList initialListOfLists={HARDCODED_LIST_LIST} />
-        {
-        /*
-        <Col>
-          <TodoList inputList={initial} listTitle={'Todo List'} />
-        </Col>
-      */}
-        <Col></Col>
-      </Row>
-    </Container>
+    <TodoListList initialListOfLists={HARDCODED_LIST_LIST} />
   );
 }
 
