@@ -1,7 +1,11 @@
 import './App.css';
-import React, {useState} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import TodoList from './TodoList.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 /*
 should have the ability to:
@@ -108,20 +112,54 @@ const HARDCODED_LIST = [
 const HARDCODED_LIST_LIST = [
   {list: HARDCODED_LIST, title: 'Todo List'},
   {list: HARDCODED_LIST, title: 'Todo List'},
+  {list: HARDCODED_LIST, title: 'Todo List'},
 ];
 
 const TodoListList = ({initialListOfLists}) => {
-  const [listOfLists] = useState(initialListOfLists);
+  // source:
+  // https://stackoverflow.com/questions/31352141/how-do-you-split-an-array-into-array-pairs-in-javascript
+  const pairedList = initialListOfLists.reduce(
+      function(result, value, index, array) {
+        if (index % 2 === 0) {
+          result.push(array.slice(index, index + 2));
+        }
+        return result;
+      }, []);
+
+  console.log(`pairedList: ${pairedList}`);
   return (
-    listOfLists.map((listObj, listIndex) =>
-      (
-        <TodoList
-          inputList={listObj.list}
-          listTitle={listObj.title}
-          key={listIndex} />
-      ))
+    <Container>
+      {
+        pairedList.map((listPair, listIndex) =>
+          (
+            <>
+              <Row>
+                <Col>
+                  <TodoList
+                    inputList={listPair[0].list}
+                    listTitle={listPair[0].title}
+                    key={listIndex} />
+                </Col>
+                {(listPair.length > 1 ?
+                <Col>
+                  <TodoList
+                    inputList={listPair[1].list}
+                    listTitle={listPair[1].title}
+                    key={listIndex} />
+                </Col> : <Col></Col>)
+                }
+              </Row>
+              <br />
+            </>
+          ))
+      }
+    </Container>
   );
 };
+TodoListList.propTypes = {
+  initialListOfLists: PropTypes.array.isRequired,
+};
+
 
 function App() {
   // const saved = JSON.parse(localStorage.getItem('todo'));

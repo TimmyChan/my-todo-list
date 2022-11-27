@@ -17,7 +17,7 @@ const TodoList = ({inputList, listTitle}) => {
     return () => {
       const newTodo = todo.filter((y, yIndex) => yIndex !== xIndex);
       setTodo(newTodo);
-      localStorage.setItem('todo', JSON.stringify(newTodo));
+      // localStorage.setItem(`todo${key}`, JSON.stringify(newTodo));
     };
   };
 
@@ -27,7 +27,8 @@ const TodoList = ({inputList, listTitle}) => {
       const newTodo = Array.from(todo);
       newTodo[xIndex] = todoItem;
       setTodo(newTodo);
-      localStorage.setItem('todo', JSON.stringify(newTodo));
+
+      // localStorage.setItem(`todo${key}`, JSON.stringify(newTodo));
     };
   };
 
@@ -60,7 +61,7 @@ const TodoList = ({inputList, listTitle}) => {
                 };
                 const newTaskList = todo.concat([placeHolderTask]);
                 setTodo(newTaskList);
-                localStorage.setItem('todo', JSON.stringify(newTaskList));
+                // localStorage.setItem(`todo${key}`, JSON.stringify(newTodo));
               }}>
               Add task
             </Button>
