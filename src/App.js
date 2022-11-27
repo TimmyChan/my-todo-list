@@ -77,8 +77,8 @@ req 10/24:
 
 11/14 Goals:
 ==Code==
-  List of TodoLists
-    use contest to deal with this
+  List of TodoLists (+)
+    use context to deal with this
   Button to add a Todolist
 */
 
@@ -86,18 +86,6 @@ const HARDCODED_LIST = [
   {
     text: 'stay quitted',
     completed: false,
-  },
-  {
-    text: 'walk',
-    completed: true,
-  },
-  {
-    text: 'walk',
-    completed: true,
-  },
-  {
-    text: 'walk',
-    completed: true,
   },
   {
     text: 'walk',
@@ -132,25 +120,22 @@ const TodoListList = ({initialListOfLists}) => {
       {
         pairedList.map((listPair, listIndex) =>
           (
-            <>
-              <Row>
-                <Col>
-                  <TodoList
-                    inputList={listPair[0].list}
-                    listTitle={listPair[0].title}
-                    key={listIndex} />
-                </Col>
-                {(listPair.length > 1 ?
+
+            <Row key={listIndex}>
+              <Col>
+                <TodoList
+                  inputList={listPair[0].list}
+                  listTitle={listPair[0].title} />
+              </Col>
+              {(listPair.length > 1 ?
                 <Col>
                   <TodoList
                     inputList={listPair[1].list}
-                    listTitle={listPair[1].title}
-                    key={listIndex} />
+                    listTitle={listPair[1].title} />
                 </Col> : <Col></Col>)
-                }
-              </Row>
-              <br />
-            </>
+              }
+              <p />
+            </Row>
           ))
       }
     </Container>
